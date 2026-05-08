@@ -5,6 +5,7 @@ import { useAuthStore } from "@/store/auth-store";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { LogIn, Mail, Lock, Loader2 } from "lucide-react";
+import React from "react";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
