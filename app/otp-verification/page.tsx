@@ -34,7 +34,7 @@ export default function OTPVerificationPage() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         className="w-full max-w-md rounded-2xl bg-white p-8 shadow-2xl dark:bg-[#0f172a] dark:ring-1 dark:ring-slate-800"
-      )
+      >
         <div className="mb-8 text-center">
           <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 text-primary">
             <ShieldCheck className="h-6 w-6" />

@@ -138,6 +138,41 @@ export const MOCK_PROJECTS: Project[] = [
     progress: 10,
   },
 ];
+export const MOCK_LEAVE_REQUESTS: LeaveRequest[] = [
+  {
+    id: "lr1",
+    employeeId: "emp1",
+    employeeName: "Alex Wilson",
+    leaveType: "ANNUAL",
+    startDate: "2026-06-10",
+    endDate: "2026-06-15",
+    reason: "Family vacation",
+    status: "PENDING",
+    appliedAt: "2026-05-01",
+  },
+  {
+    id: "lr2",
+    employeeId: "emp3",
+    employeeName: "Robert Brown",
+    leaveType: "SICK",
+    startDate: "2026-05-05",
+    endDate: "2026-05-06",
+    reason: "Flu",
+    status: "APPROVED",
+    appliedAt: "2026-05-04",
+  },
+  {
+    id: "lr3",
+    employeeId: "emp4",
+    employeeName: "Emma Miller",
+    leaveType: "CASUAL",
+    startDate: "2026-05-20",
+    endDate: "2026-05-21",
+    reason: "Personal work",
+    status: "REJECTED",
+    appliedAt: "2026-05-15",
+  },
+];
 
 export const MOCK_STATS = [
   { label: "Total Employees", value: "148", change: "+12%", trend: "up" },

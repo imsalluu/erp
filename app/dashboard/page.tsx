@@ -8,6 +8,7 @@ import HRDashboard from "@/modules/dashboard/views/hr-dashboard";
 import PMDashboard from "@/modules/dashboard/views/pm-dashboard";
 import SupervisorDashboard from "@/modules/dashboard/views/supervisor-dashboard";
 import EmployeeDashboard from "@/modules/dashboard/views/employee-dashboard";
+import React from "react";
 
 export default function DashboardPage() {
   const { user } = useAuthStore();

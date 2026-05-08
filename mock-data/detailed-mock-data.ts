@@ -204,16 +204,46 @@ export const EMPLOYEE_KPI_RECORDS = [
   },
 ];
 
-export const SUBSCRIPTION_PLANS = [
-  { id: "P1", name: "Starter", price: 49, interval: "month", features: ["10 Employees", "Basic Attendance", "Email Support"], recommended: false },
-  { id: "P2", name: "Professional", price: 149, interval: "month", features: ["50 Employees", "Advanced Projects", "KPI Tracking", "Priority Support"], recommended: true },
-  { id: "P3", name: "Enterprise", price: 499, interval: "month", features: ["Unlimited Employees", "Custom Branding", "Single Sign-On (SSO)", "24/7 Dedicated Support"], recommended: false },
+export const PRICING_PLANS = [
+  { id: "P1", name: "Starter", price: 49, interval: "month", features: ["10 Employees", "Basic Attendance", "Email Support"], recommended: false, description: "Perfect for small teams just getting started." },
+  { id: "P2", name: "Professional", price: 149, interval: "month", features: ["50 Employees", "Advanced Projects", "KPI Tracking", "Priority Support"], recommended: true, description: "Advanced tools for growing companies." },
+  { id: "P3", name: "Enterprise", price: 499, interval: "month", features: ["Unlimited Employees", "Custom Branding", "Single Sign-On (SSO)", "24/7 Dedicated Support"], recommended: false, description: "Enterprise-grade features and security." },
+];
+
+export const SUBSCRIPTION_PLANS = PRICING_PLANS;
+
+export const BILLING_HISTORY = [
+  { id: "INV-2024-001", date: "May 1, 2024", amount: 149, status: "Paid" },
+  { id: "INV-2024-002", date: "Apr 1, 2024", amount: 149, status: "Paid" },
+  { id: "INV-2024-003", date: "Mar 1, 2024", amount: 149, status: "Paid" },
 ];
 
 export const TENANTS = [
   { id: "T1", name: "TechStream Solutions", sector: "Information Technology", users: 124, status: "Active", plan: "Professional", joined: "2025-01-12" },
   { id: "T2", name: "Global Logistics Co.", sector: "Supply Chain", users: 50, status: "Active", plan: "Starter", joined: "2025-03-05" },
   { id: "T3", name: "Innovative Health", sector: "Healthcare", users: 300, status: "Trialing", plan: "Enterprise", joined: "2026-04-20" },
+];
+export const TENANT_GROWTH_DATA = [
+  { month: "Jan", tenants: 12, revenue: 15000 },
+  { month: "Feb", tenants: 18, revenue: 22000 },
+  { month: "Mar", tenants: 25, revenue: 31000 },
+  { month: "Apr", tenants: 32, revenue: 42000 },
+  { month: "May", tenants: 42, revenue: 45200 },
+];
+
+export const SECTOR_DISTRIBUTION = [
+  { name: "IT", value: 40, color: "#6366f1" },
+  { name: "Logistics", value: 20, color: "#10b981" },
+  { name: "Healthcare", value: 25, color: "#f43f5e" },
+  { name: "Retail", value: 15, color: "#f59e0b" },
+];
+
+export const SYSTEM_LOGS = [
+  { id: "sl-1", type: "tenant", message: "New tenant 'Acme Corp' registered", time: "2m ago", status: "success" },
+  { id: "sl-2", type: "system", message: "Database backup completed successfully", time: "15m ago", status: "success" },
+  { id: "sl-3", type: "security", message: "Multiple failed login attempts from IP 192.168.1.1", time: "1h ago", status: "warning" },
+  { id: "sl-4", type: "tenant", message: "Tenant 'GlobalTech' upgraded to Enterprise plan", time: "3h ago", status: "info" },
+  { id: "sl-5", type: "system", message: "Scheduled maintenance scheduled for Sunday at 02:00 AM", time: "5h ago", status: "info" },
 ];
 
 export const PLATFORM_STATS = {

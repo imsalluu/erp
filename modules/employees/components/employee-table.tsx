@@ -1,5 +1,6 @@
 "use client";
 
+import * as React from "react";
 import { useState } from "react";
 import {
   flexRender,
@@ -16,11 +17,21 @@ import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { Employee } from "@/types";
 import { MOCK_EMPLOYEES } from "@/mock-data";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import AddEmployeeForm from "./add-employee-form";
 
 export default function EmployeeTable() {
-  const [data] = useState<Employee[]>(MOCK_EMPLOYEES);
+  const [data, setData] = useState<Employee[]>(MOCK_EMPLOYEES);
   const [sorting, setSorting] = useState<SortingState>([]);
   const [globalFilter, setGlobalFilter] = useState("");
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
   const columns: ColumnDef<Employee>[] = [
     {
@@ -106,10 +117,20 @@ export default function EmployeeTable() {
             <Filter className="h-4 w-4" />
             Filter
           </button>
-          <button className="flex items-center gap-2 rounded-xl bg-primary px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-primary/20 hover:bg-primary/90 transition-all">
-            <Plus className="h-4 w-4" />
-            Add Employee
-          </button>
+          <Dialog open={isAddModalOpen} onOpenChange={setIsAddModalOpen}>
+            <DialogTrigger asChild>
+              <Button className="rounded-xl font-semibold">
+                <Plus className="h-4 w-4 mr-2" />
+                Add Employee
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="sm:max-w-[500px]">
+              <DialogHeader>
+                <DialogTitle>Add New Employee</DialogTitle>
+              </DialogHeader>
+              <AddEmployeeForm onSuccess={() => setIsAddModalOpen(false)} />
+            </DialogContent>
+          </Dialog>
         </div>
       </div>
 

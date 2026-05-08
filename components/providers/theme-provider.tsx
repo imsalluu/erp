@@ -1,6 +1,7 @@
 "use client";
 
 import { useThemeStore } from "@/store/theme-store";
+import React from "react";
 import { useEffect, useState } from "react";
 
 export default function ThemeProvider({ children }: { children: React.ReactNode }) {
@@ -8,6 +9,7 @@ export default function ThemeProvider({ children }: { children: React.ReactNode 
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setMounted(true);
   }, []);
 

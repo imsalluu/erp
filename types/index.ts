@@ -52,11 +52,13 @@ export interface Attendance {
 export interface LeaveRequest {
   id: string;
   employeeId: string;
-  type: "ANNUAL" | "SICK" | "MATERNITY" | "PATERNITY" | "UNPAID";
+  employeeName: string;
+  leaveType: string;
   startDate: string;
   endDate: string;
   reason: string;
   status: "PENDING" | "APPROVED" | "REJECTED";
+  appliedAt: string;
 }
 
 export interface Project {

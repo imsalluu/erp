@@ -10,8 +10,19 @@ import {
    MoreVertical, ArrowUpRight, Shield
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import {
+   Dialog,
+   DialogContent,
+   DialogHeader,
+   DialogTitle,
+   DialogTrigger,
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import ProvisionTenantForm from "@/modules/admin/components/provision-tenant-form";
+import { useState } from "react";
 
 export default function TenantManagementPage() {
+   const [isProvisionModalOpen, setIsProvisionModalOpen] = useState(false);
    return (
       <MainLayout roleRequired="SYSTEM_ADMIN">
          <div className="space-y-10 pb-20">
@@ -21,10 +32,20 @@ export default function TenantManagementPage() {
                   description="Manage all organizational workspaces, monitor usage limits, and control global license distribution."
                   badge="Root Access"
                />
-               <button className="flex items-center gap-2 rounded-xl bg-primary px-6 py-3 text-sm font-bold text-white shadow-lg shadow-primary/20 hover:bg-primary/90 transition-all">
-                  <Plus className="h-4 w-4" />
-                  Provision New Tenant
-               </button>
+               <Dialog open={isProvisionModalOpen} onOpenChange={setIsProvisionModalOpen}>
+                   <DialogTrigger asChild>
+                      <Button className="rounded-xl font-bold px-6 py-3 h-auto shadow-lg shadow-primary/20">
+                         <Plus className="h-4 w-4 mr-2" />
+                         Provision New Tenant
+                      </Button>
+                   </DialogTrigger>
+                   <DialogContent className="sm:max-w-[500px]">
+                      <DialogHeader>
+                         <DialogTitle>Provision New Tenant</DialogTitle>
+                      </DialogHeader>
+                      <ProvisionTenantForm onSuccess={() => setIsProvisionModalOpen(false)} />
+                   </DialogContent>
+                </Dialog>
             </div>
 
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
