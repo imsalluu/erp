@@ -25,7 +25,7 @@ export default function AttendanceCard() {
       <div className="absolute top-0 right-0 p-8 opacity-5">
         <Clock className="h-24 w-24" />
       </div>
-      
+
       <div className="flex flex-col items-center text-center">
         <h2 className="text-3xl font-bold tracking-tighter tabular-nums">
           {currentTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })}
@@ -40,14 +40,14 @@ export default function AttendanceCard() {
             onClick={handleCheckIn}
             className={cn(
               "group relative flex h-20 w-20 items-center justify-center rounded-full shadow-lg transition-all border-4",
-              checkedIn 
-                ? "bg-rose-500/10 border-rose-500 text-rose-500 shadow-rose-500/20" 
+              checkedIn
+                ? "bg-rose-500/10 border-rose-500 text-rose-500 shadow-rose-500/20"
                 : "bg-primary/10 border-primary text-primary shadow-primary/20 hover:bg-primary hover:text-white"
             )}
           >
             {checkedIn ? <LogOut className="h-8 w-8" /> : <Fingerprint className="h-8 w-8" />}
           </motion.button>
-          
+
           <div className="text-center">
             <p className="text-sm font-semibold">
               {checkedIn ? "Check Out" : "Check In"}

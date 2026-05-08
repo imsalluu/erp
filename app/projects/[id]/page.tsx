@@ -8,23 +8,23 @@ import { ChevronLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 export default function ProjectDetailsPage({ params }: { params: Promise<{ id: string }> }) {
-  const { id } = use(params);
-  const router = useRouter();
-  
-  const project = PROJECTS.find(p => p.id === id) || PROJECTS[0];
+   const { id } = use(params);
+   const router = useRouter();
 
-  return (
-    <MainLayout>
-      <div className="space-y-6">
-        <button 
-          onClick={() => router.back()}
-          className="flex items-center gap-2 text-sm font-semibold text-muted-foreground hover:text-primary transition-colors mb-4 group"
-        >
-          <ChevronLeft className="h-4 w-4 group-hover:-translate-x-1 transition-transform" />
-          Back to list
-        </button>
-        <ProjectDetailsView project={project} />
-      </div>
-    </MainLayout>
-  );
+   const project = PROJECTS.find(p => p.id === id) || PROJECTS[0];
+
+   return (
+      <MainLayout>
+         <div className="space-y-6">
+            <button
+               onClick={() => router.back()}
+               className="flex items-center gap-2 text-sm font-semibold text-muted-foreground hover:text-primary transition-colors mb-4 group"
+            >
+               <ChevronLeft className="h-4 w-4 group-hover:-translate-x-1 transition-transform" />
+               Back to list
+            </button>
+            <ProjectDetailsView project={project} />
+         </div>
+      </MainLayout>
+   );
 }

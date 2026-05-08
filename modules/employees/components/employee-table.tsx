@@ -53,8 +53,8 @@ export default function EmployeeTable() {
         <div className={cn(
           "inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium",
           row.original.status === "ACTIVE" ? "bg-emerald-100 text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-400" :
-          row.original.status === "ON_LEAVE" ? "bg-amber-100 text-amber-700 dark:bg-amber-500/10 dark:text-amber-400" :
-          "bg-slate-100 text-slate-700 dark:bg-slate-500/10 dark:text-slate-400"
+            row.original.status === "ON_LEAVE" ? "bg-amber-100 text-amber-700 dark:bg-amber-500/10 dark:text-amber-400" :
+              "bg-slate-100 text-slate-700 dark:bg-slate-500/10 dark:text-slate-400"
         )}>
           {row.original.status}
         </div>
