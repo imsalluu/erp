@@ -12,8 +12,24 @@ import {
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { useState } from "react";
 
 export default function ProfilePage() {
+  const [passLoading, setPassLoading] = useState(false);
+  const [passSuccess, setPassSuccess] = useState(false);
+
+  const handlePasswordChange = (e: React.FormEvent) => {
+    e.preventDefault();
+    setPassLoading(true);
+    setTimeout(() => {
+      setPassLoading(false);
+      setPassSuccess(true);
+      setTimeout(() => setPassSuccess(false), 3000);
+    }, 1000);
+  };
+
   return (
     <MainLayout>
       <div className="space-y-8 pb-20 max-w-6xl mx-auto">
@@ -102,6 +118,34 @@ export default function ProfilePage() {
                 <InfoItem icon={<Shield className="h-4 w-4" />} label="Role" value="System Admin" />
                 <InfoItem icon={<Calendar className="h-4 w-4" />} label="Contract Type" value="Full-Time" />
                 <InfoItem icon={<TrendingUp className="h-4 w-4" />} label="Performance" value="Exceeds Expectations" />
+              </CardContent>
+            </Card>
+
+            <Card className="rounded-3xl border-border/50 shadow-sm mt-8 border-red-500/20">
+              <CardHeader className="border-b border-border/50 bg-red-500/5 rounded-t-3xl">
+                <div className="flex items-center gap-2">
+                   <Shield className="h-5 w-5 text-red-500" />
+                   <CardTitle className="text-lg font-bold text-red-500">Security & Password</CardTitle>
+                </div>
+              </CardHeader>
+              <CardContent className="pt-6">
+                <form onSubmit={handlePasswordChange} className="space-y-4 max-w-sm">
+                  <div className="space-y-2">
+                    <Label>Current Password</Label>
+                    <Input type="password" required placeholder="••••••••" />
+                  </div>
+                  <div className="space-y-2">
+                    <Label>New Password</Label>
+                    <Input type="password" required placeholder="••••••••" />
+                  </div>
+                  <div className="space-y-2">
+                    <Label>Confirm New Password</Label>
+                    <Input type="password" required placeholder="••••••••" />
+                  </div>
+                  <Button type="submit" disabled={passLoading} className="w-full mt-4 font-bold bg-foreground text-background hover:bg-foreground/90">
+                    {passLoading ? "Updating..." : passSuccess ? "Password Updated!" : "Update Password"}
+                  </Button>
+                </form>
               </CardContent>
             </Card>
           </div>
