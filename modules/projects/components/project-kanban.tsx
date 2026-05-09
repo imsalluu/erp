@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 import {
    MoreVertical, Plus, MessageSquare,
@@ -21,12 +21,35 @@ const COLUMNS = [
 ];
 
 export default function ProjectKanban({ projectId }: ProjectKanbanProps) {
-   const tasks = PROJECT_TASKS.filter(t => t.projectId === projectId);
+   const [tasks, setTasks] = useState(() => PROJECT_TASKS.filter(t => t.projectId === projectId));
+
+   const handleDragStart = (e: React.DragEvent<HTMLDivElement>, taskId: string) => {
+      e.dataTransfer.setData("taskId", taskId);
+   };
+
+   const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+      e.preventDefault();
+   };
+
+   const handleDrop = (e: React.DragEvent<HTMLDivElement>, statusId: string) => {
+      e.preventDefault();
+      const taskId = e.dataTransfer.getData("taskId");
+      if (!taskId) return;
+      
+      setTasks(prev => prev.map(t => 
+         t.id === taskId ? { ...t, status: statusId } : t
+      ));
+   };
 
    return (
       <div className="flex gap-6 overflow-x-auto pb-6 -mx-4 px-4 scrollbar-hide">
          {COLUMNS.map((column) => (
-            <div key={column.id} className="flex-none w-80 space-y-4">
+            <div 
+                key={column.id} 
+                className="flex-none w-80 space-y-4"
+                onDragOver={handleDragOver}
+                onDrop={(e) => handleDrop(e, column.id)}
+            >
                <div className="flex items-center justify-between px-2">
                   <div className="flex items-center gap-2">
                      <span className="font-extrabold text-[10px] uppercase tracking-[0.2em]">{column.label}</span>
@@ -41,7 +64,11 @@ export default function ProjectKanban({ projectId }: ProjectKanbanProps) {
 
                <div className="min-h-[500px] rounded-3xl bg-muted/20 p-3 space-y-4 border-2 border-dashed border-border/50">
                   {tasks.filter(t => t.status === column.id).map((task) => (
-                     <KanbanCard key={task.id} task={task} />
+                     <KanbanCard 
+                        key={task.id} 
+                        task={task} 
+                        onDragStart={handleDragStart} 
+                     />
                   ))}
                   <button className="w-full py-4 rounded-2xl border-2 border-dashed border-border/50 text-[10px] font-black uppercase tracking-widest text-muted-foreground hover:border-primary/50 hover:bg-primary/5 hover:text-primary transition-all">
                      Add New Task
@@ -53,7 +80,7 @@ export default function ProjectKanban({ projectId }: ProjectKanbanProps) {
    );
 }
 
-function KanbanCard({ task }: { task: any }) {
+function KanbanCard({ task, onDragStart }: { task: any, onDragStart: (e: React.DragEvent<HTMLDivElement>, id: string) => void }) {
    const priorityColors = {
       "High": "bg-rose-500",
       "Medium": "bg-amber-500",
@@ -62,6 +89,8 @@ function KanbanCard({ task }: { task: any }) {
 
    return (
       <motion.div
+         draggable
+         onDragStartCapture={(e: React.DragEvent<HTMLDivElement>) => onDragStart(e, task.id)}
          whileHover={{ y: -4, scale: 1.02 }}
          className="bg-card border border-border p-5 rounded-2xl shadow-sm group hover:border-primary/30 transition-all cursor-grab active:cursor-grabbing"
       >
