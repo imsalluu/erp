@@ -6,8 +6,12 @@ import { Clock, Plus, Settings2, Trash2, Edit2, Users } from "lucide-react";
 import { SHIFTS } from "@/mock-data/detailed-mock-data";
 import { ShiftModal, Shift } from "./shift-modal";
 import { AssignShiftModal } from "./assign-shift-modal";
+import { useAuthStore } from "@/store/auth-store";
 
 export default function ShiftList() {
+  const { user } = useAuthStore();
+  const canManageShifts = user?.role !== "SUPERVISOR";
+
   const [shifts, setShifts] = useState<Shift[]>(SHIFTS.map(s => ({...s, assignedEmployees: []})));
   
   const [isShiftModalOpen, setIsShiftModalOpen] = useState(false);
@@ -55,10 +59,12 @@ export default function ShiftList() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
          <h3 className="font-bold text-lg tracking-tight">Active Shifts</h3>
-         <button onClick={openCreate} className="flex items-center gap-2 rounded-xl bg-primary/10 px-4 py-2 text-xs font-bold text-primary hover:bg-primary hover:text-white transition-all">
-            <Plus className="h-4 w-4" />
-            Create New Shift
-         </button>
+         {canManageShifts && (
+           <button onClick={openCreate} className="flex items-center gap-2 rounded-xl bg-primary/10 px-4 py-2 text-xs font-bold text-primary hover:bg-primary hover:text-white transition-all">
+              <Plus className="h-4 w-4" />
+              Create New Shift
+           </button>
+         )}
       </div>
 
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -77,10 +83,12 @@ export default function ShiftList() {
                  <div className="h-10 w-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-all">
                     <Clock className="h-5 w-5" />
                  </div>
-                 <div className="flex items-center gap-1">
-                    <button onClick={() => openEdit(shift)} className="p-1.5 rounded-lg hover:bg-muted text-muted-foreground transition-all"><Edit2 className="h-3.5 w-3.5" /></button>
-                    <button onClick={() => handleDeleteShift(shift.id)} className="p-1.5 rounded-lg hover:bg-muted text-rose-500 transition-all"><Trash2 className="h-3.5 w-3.5" /></button>
-                 </div>
+                 {canManageShifts && (
+                   <div className="flex items-center gap-1">
+                      <button onClick={() => openEdit(shift)} className="p-1.5 rounded-lg hover:bg-muted text-muted-foreground transition-all"><Edit2 className="h-3.5 w-3.5" /></button>
+                      <button onClick={() => handleDeleteShift(shift.id)} className="p-1.5 rounded-lg hover:bg-muted text-rose-500 transition-all"><Trash2 className="h-3.5 w-3.5" /></button>
+                   </div>
+                 )}
               </div>
 
               <div className="mt-4">

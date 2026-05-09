@@ -5,7 +5,7 @@ export const REALISTIC_EMPLOYEES: Employee[] = [
     id: "emp-001",
     firstName: "Alex",
     lastName: "Wilson",
-    email: "alex.wilson@globaltech.com",
+    email: "employee@erp.com",
     phone: "+1 (555) 123-4567",
     role: "EMPLOYEE",
     department: "Engineering",

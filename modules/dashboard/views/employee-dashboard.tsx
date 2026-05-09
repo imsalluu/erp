@@ -1,14 +1,25 @@
 "use client";
 
 import { StatCard, SectionHeader } from "../components/dashboard-ui";
-import { CheckSquare, Clock, Calendar, Star, Briefcase, Bell } from "lucide-react";
+import { CheckSquare, Clock, Calendar, Star, Bell, Sparkles, FileText, Download } from "lucide-react";
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
+import { cn } from "@/lib/utils";
+
+const performanceData = [
+  { name: 'W1', score: 85 },
+  { name: 'W2', score: 88 },
+  { name: 'W3', score: 92 },
+  { name: 'W4', score: 95 },
+  { name: 'W5', score: 91 },
+  { name: 'W6', score: 98 },
+];
 
 export default function EmployeeDashboard() {
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 pb-20">
       <SectionHeader 
         title="My Dashboard" 
-        description="View your personal tasks, attendance, and performance metrics."
+        description="View your personal tasks, attendance, and performative metrics."
         badge="Employee"
       />
 
@@ -20,78 +31,94 @@ export default function EmployeeDashboard() {
       </div>
 
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-7">
-        <div className="col-span-4 rounded-xl border border-border bg-card p-6">
-          <h3 className="font-semibold text-lg mb-6">Upcoming Tasks</h3>
-          <div className="space-y-4">
-            {[
-              { title: "Fix Dashboard Sidebar bug", project: "ERP Frontend", due: "Today", priority: "High" },
-              { title: "Implement Auth Flow", project: "ERP Frontend", due: "Tomorrow", priority: "Medium" },
-              { title: "Code Review: API Integration", project: "Mobile App", due: "Friday", priority: "Low" },
-            ].map((task, i) => (
-              <div key={i} className="flex items-center justify-between p-4 rounded-xl bg-muted/20 border border-border group hover:border-primary/50 transition-colors">
-                <div className="flex items-center gap-4">
-                  <div className={cn(
-                    "h-2 w-2 rounded-full",
-                    task.priority === "High" ? "bg-rose-500" : task.priority === "Medium" ? "bg-amber-500" : "bg-slate-400"
-                  )} />
-                  <div>
-                    <p className="font-medium group-hover:text-primary transition-colors">{task.title}</p>
-                    <p className="text-xs text-muted-foreground">{task.project} • Due {task.due}</p>
+        <div className="col-span-4 space-y-6">
+          {/* Performance Chart */}
+          <div className="rounded-xl border border-border bg-card p-6 shadow-sm">
+             <h3 className="font-semibold text-lg mb-6">Weekly Performance Trend</h3>
+             <div className="h-[250px] w-full">
+                <ResponsiveContainer width="100%" height="100%">
+                   <LineChart data={performanceData}>
+                     <CartesianGrid strokeDasharray="3 3" stroke="currentColor" className="opacity-10" vertical={false} />
+                     <XAxis dataKey="name" stroke="currentColor" fontSize={12} className="opacity-50 text-muted-foreground" axisLine={false} tickLine={false} />
+                     <YAxis stroke="currentColor" fontSize={12} className="opacity-50 text-muted-foreground" axisLine={false} tickLine={false} />
+                     <Tooltip 
+                        contentStyle={{ backgroundColor: 'hsl(var(--card))', borderColor: 'hsl(var(--border))', borderRadius: '12px', fontWeight: 'bold' }}
+                        itemStyle={{ color: 'hsl(var(--primary))' }}
+                     />
+                     <Line type="monotone" dataKey="score" stroke="hsl(var(--primary))" strokeWidth={4} dot={{ r: 4, strokeWidth: 2 }} activeDot={{ r: 6, fill: 'hsl(var(--primary))' }} />
+                   </LineChart>
+                </ResponsiveContainer>
+             </div>
+          </div>
+
+          <div className="rounded-xl border border-border bg-card p-6 shadow-sm">
+            <h3 className="font-semibold text-lg mb-4">Personal Reports</h3>
+            <div className="space-y-4">
+              {[
+                { title: "Q1 Performance Review", date: "April 2026", size: "1.2 MB" },
+                { title: "Monthly Attendance Report", date: "May 2026", size: "840 KB" },
+              ].map((report, i) => (
+                <div key={i} className="flex items-center justify-between p-4 rounded-xl border border-border/50 hover:bg-muted/50 transition-colors cursor-pointer group bg-card">
+                  <div className="flex items-center gap-4">
+                    <div className="h-10 w-10 shrink-0 rounded-lg bg-primary/10 text-primary flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-all shadow-sm">
+                      <FileText className="h-5 w-5" />
+                    </div>
+                    <div>
+                      <h4 className="text-sm font-bold group-hover:text-primary transition-colors">{report.title}</h4>
+                      <span className="text-xs font-semibold text-muted-foreground mt-0.5 block">{report.date} • {report.size}</span>
+                    </div>
                   </div>
+                  <button className="h-8 w-8 rounded-full flex items-center justify-center text-muted-foreground hover:text-primary hover:bg-primary/10 transition-colors">
+                    <Download className="h-4 w-4" />
+                  </button>
                 </div>
-                <button className="text-xs font-medium px-3 py-1.5 rounded-lg bg-primary/10 text-primary hover:bg-primary hover:text-white transition-all">
-                  Complete
-                </button>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
 
         <div className="col-span-3 space-y-6">
-          <div className="rounded-xl border border-border bg-card p-6">
-            <h3 className="font-semibold text-lg mb-4">Announcements</h3>
-            <div className="space-y-4">
-              <div className="flex gap-3">
-                <div className="h-8 w-8 rounded-full bg-amber-100 flex items-center justify-center text-amber-600 shrink-0">
-                  <Bell className="h-4 w-4" />
-                </div>
-                <div>
-                  <p className="text-sm font-medium">Company Townhall</p>
-                  <p className="text-xs text-muted-foreground">Friday, May 15th at 10:00 AM</p>
-                </div>
-              </div>
-              <div className="flex gap-3">
-                <div className="h-8 w-8 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600 shrink-0">
-                  <CheckSquare className="h-4 w-4" />
-                </div>
-                <div>
-                  <p className="text-sm font-medium">New Health Insurance Plan</p>
-                  <p className="text-xs text-muted-foreground">Document updated in the vault.</p>
-                </div>
-              </div>
+          <div className="rounded-xl border border-border bg-gradient-to-br from-indigo-500/10 to-purple-500/10 p-6 shadow-sm relative overflow-hidden group">
+            <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:scale-110 transition-transform">
+               <Sparkles className="h-16 w-16 text-indigo-500" />
             </div>
+            <h3 className="font-bold text-lg mb-2 flex items-center gap-2 text-indigo-600 dark:text-indigo-400">
+               <Sparkles className="h-5 w-5" />
+               AI Insights
+            </h3>
+            <p className="text-sm font-medium leading-relaxed dark:text-indigo-100 text-indigo-950/80 mb-4 pr-4">
+               You've been highly productive this week, completing 20% more tasks than average! However, your active screen time is very high. Consider taking a short break or scheduling a casual leave day soon to prevent burnout.
+            </p>
+            <button className="w-full mt-2 py-2.5 rounded-xl bg-indigo-600/10 text-indigo-600 dark:text-indigo-400 text-xs font-bold hover:bg-indigo-600/20 transition-all shadow-sm">
+               Review Leave Balance
+            </button>
           </div>
 
-          <div className="rounded-xl border border-gradient-to-br from-primary/20 to-indigo-500/20 bg-card p-6 border-primary/20 shadow-sm relative overflow-hidden group">
-            <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:scale-110 transition-transform">
-              <Star className="h-12 w-12" />
-            </div>
-            <h3 className="font-bold text-lg mb-1">Q2 Goals Progress</h3>
-            <p className="text-xs text-muted-foreground mb-4">Performance tracking</p>
-            <div className="space-y-3">
-              <div className="h-2 w-full bg-muted rounded-full overflow-hidden">
-                <div className="h-full bg-primary w-[75%]" />
-              </div>
-              <p className="text-xs font-medium text-right text-primary">75% Complete</p>
+          <div className="rounded-xl border border-border bg-card p-6 shadow-sm">
+            <h3 className="font-semibold text-lg mb-6">Upcoming Tasks</h3>
+            <div className="space-y-4">
+              {[
+                { title: "Fix Dashboard Sidebar bug", project: "ERP Frontend", due: "Today", priority: "High" },
+                { title: "Implement Auth Flow", project: "ERP Frontend", due: "Tomorrow", priority: "Medium" },
+                { title: "Code Review: API Integration", project: "Mobile App", due: "Friday", priority: "Low" },
+              ].map((task, i) => (
+                <div key={i} className="flex items-center justify-between p-4 rounded-xl bg-muted/20 border border-border group hover:border-primary/50 transition-colors">
+                  <div className="flex items-center gap-4">
+                    <div className={cn(
+                      "h-2 w-2 rounded-full shrink-0",
+                      task.priority === "High" ? "bg-rose-500" : task.priority === "Medium" ? "bg-amber-500" : "bg-slate-400"
+                    )} />
+                    <div className="overflow-hidden">
+                      <p className="font-bold text-sm truncate group-hover:text-primary transition-colors">{task.title}</p>
+                      <p className="text-xs font-medium text-muted-foreground truncate">{task.project} • Due {task.due}</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </div>
       </div>
     </div>
   );
-}
-
-// Utility function duplicated for this file to avoid import issues if not shared correctly
-function cn(...inputs: any[]) {
-  return inputs.filter(Boolean).join(" ");
 }

@@ -18,12 +18,19 @@ const mockTasks = [
   { id: "3", title: "Design settings page", status: "TODO", priority: "LOW", dueDate: "2026-05-15", assignee: "ANNA", projectId: "P2" },
   { id: "4", title: "Leave module testing", status: "REVIEW", priority: "HIGH", dueDate: "2026-05-08", assignee: "JW", projectId: "P3" },
   { id: "5", title: "Setup CI/CD pipeline", status: "DONE", priority: "CRITICAL", dueDate: "2026-05-01", assignee: "MIKE", projectId: "P2" },
+  { id: "6", title: "Review onboarding materials", status: "TODO", priority: "MEDIUM", dueDate: "2026-05-18", assignee: "AW", projectId: "P1" },
+  { id: "7", title: "Write weekly status report", status: "IN_PROGRESS", priority: "LOW", dueDate: "2026-05-12", assignee: "AW", projectId: "P1" },
+  { id: "8", title: "Bug fix: Navbar overflow", status: "REVIEW", priority: "HIGH", dueDate: "2026-05-15", assignee: "AW", projectId: "P2" },
+  { id: "9", title: "Update dependencies", status: "DONE", priority: "MEDIUM", dueDate: "2026-05-05", assignee: "AW", projectId: "P1" },
+  { id: "10", title: "Client feedback presentation", status: "TODO", priority: "CRITICAL", dueDate: "2026-05-22", assignee: "MIKE", projectId: "P3" },
 ];
 
 export default function TasksPage() {
   const dateInputRef = useRef<HTMLInputElement>(null);
   const { user } = useAuthStore();
-  const canCreateTask = user?.role === "BUSINESS_OWNER" || user?.role === "PROJECT_MANAGER" || user?.role === "SUPERVISOR";
+  const canCreateTask = user?.role === "BUSINESS_OWNER" || user?.role === "PROJECT_MANAGER" || user?.role === "SUPERVISOR" || user?.role === "EMPLOYEE";
+  const isEmployee = user?.role === "EMPLOYEE";
+  const userInitials = user?.name ? user.name.split(" ").map(n => n.charAt(0)).join("").toUpperCase() : "";
   
   const [tasks, setTasks] = useState(mockTasks);
   const [projectFilter, setProjectFilter] = useState("all");
@@ -35,8 +42,11 @@ export default function TasksPage() {
   const [newTask, setNewTask] = useState({ title: "", priority: "MEDIUM", dueDate: "", assignee: "", projectId: "P1" });
 
   const filteredTasks = tasks
+    .filter(t => {
+       if (isEmployee) return t.assignee === userInitials;
+       return assigneeFilter === "all" || t.assignee === assigneeFilter;
+    })
     .filter(t => projectFilter === "all" || t.projectId === projectFilter)
-    .filter(t => assigneeFilter === "all" || t.assignee === assigneeFilter)
     .filter(t => !dateFilter || t.dueDate === dateFilter);
 
   const handleCreateTask = () => {
@@ -146,32 +156,36 @@ export default function TasksPage() {
 
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 bg-muted/20 p-4 rounded-2xl border border-border">
           <div className="flex items-center gap-6">
-            <div className="text-sm flex items-center gap-2">
-              <span className="text-muted-foreground font-medium">Project:</span>
-              <select 
-                value={projectFilter} 
-                onChange={e => setProjectFilter(e.target.value)}
-                className="bg-card text-foreground font-bold border border-border rounded-lg px-3 py-1.5 outline-none focus:ring-2 focus:ring-primary/20 cursor-pointer"
-              >
-                <option value="all">All Projects</option>
-                <option value="P1">Project 1</option>
-                <option value="P2">Project 2</option>
-                <option value="P3">Project 3</option>
-              </select>
-            </div>
-            <div className="text-sm flex items-center gap-2">
-              <span className="text-muted-foreground font-medium">Assignee:</span>
-              <select 
-                value={assigneeFilter} 
-                onChange={e => setAssigneeFilter(e.target.value)}
-                className="bg-card text-foreground font-bold border border-border rounded-lg px-3 py-1.5 outline-none focus:ring-2 focus:ring-primary/20 cursor-pointer uppercase"
-              >
-                <option value="all">Everyone</option>
-                <option value="JW">JW</option>
-                <option value="MIKE">MIKE</option>
-                <option value="ANNA">ANNA</option>
-              </select>
-            </div>
+            {!isEmployee && (
+              <>
+                <div className="text-sm flex items-center gap-2">
+                  <span className="text-muted-foreground font-medium">Project:</span>
+                  <select 
+                    value={projectFilter} 
+                    onChange={e => setProjectFilter(e.target.value)}
+                    className="bg-card text-foreground font-bold border border-border rounded-lg px-3 py-1.5 outline-none focus:ring-2 focus:ring-primary/20 cursor-pointer"
+                  >
+                    <option value="all">All Projects</option>
+                    <option value="P1">Project 1</option>
+                    <option value="P2">Project 2</option>
+                    <option value="P3">Project 3</option>
+                  </select>
+                </div>
+                <div className="text-sm flex items-center gap-2">
+                  <span className="text-muted-foreground font-medium">Assignee:</span>
+                  <select 
+                    value={assigneeFilter} 
+                    onChange={e => setAssigneeFilter(e.target.value)}
+                    className="bg-card text-foreground font-bold border border-border rounded-lg px-3 py-1.5 outline-none focus:ring-2 focus:ring-primary/20 cursor-pointer uppercase"
+                  >
+                    <option value="all">Everyone</option>
+                    <option value="JW">JW</option>
+                    <option value="MIKE">MIKE</option>
+                    <option value="ANNA">ANNA</option>
+                  </select>
+                </div>
+              </>
+            )}
           </div>
           <div className="flex items-center gap-2 p-1 bg-card rounded-xl border border-border shadow-sm">
             <button 

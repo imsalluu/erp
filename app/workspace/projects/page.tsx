@@ -17,13 +17,23 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import CreateProjectForm from "@/modules/projects/components/create-project-form";
+import { useAuthStore } from "@/store/auth-store";
 
 export default function ProjectsPage() {
+   const { user } = useAuthStore();
    const [view, setView] = useState<"grid" | "list">("grid");
    const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
 
+   const isAdmin = user?.role === "BUSINESS_OWNER" || user?.role === "HR";
+   const canCreateProject = isAdmin || user?.role === "PROJECT_MANAGER";
+   const visibleProjects = PROJECTS.filter(project => {
+       if (isAdmin) return true;
+       if (project.manager === user?.name) return true;
+       return project.team.some(member => member.email === user?.email);
+   });
+
    return (
-      <MainLayout allowedRoles={["BUSINESS_OWNER", "PROJECT_MANAGER"]}>
+      <MainLayout allowedRoles={["BUSINESS_OWNER", "HR", "PROJECT_MANAGER", "SUPERVISOR", "EMPLOYEE"]}>
          <div className="space-y-8 pb-20">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
                <SectionHeader
@@ -36,20 +46,22 @@ export default function ProjectsPage() {
                      <Filter className="h-4 w-4" />
                      Filter
                   </button>
-                  <Dialog open={isCreateModalOpen} onOpenChange={setIsCreateModalOpen}>
-                    <DialogTrigger asChild>
-                      <Button className="rounded-xl bg-primary px-6 py-2.5 h-auto text-sm font-bold text-white shadow-lg shadow-primary/20 hover:bg-primary/90 transition-all">
-                        <Plus className="h-4 w-4 mr-2" />
-                        Start New Project
-                      </Button>
-                    </DialogTrigger>
-                    <DialogContent className="sm:max-w-[600px]">
-                      <DialogHeader>
-                        <DialogTitle>Create New Project</DialogTitle>
-                      </DialogHeader>
-                      <CreateProjectForm onSuccess={() => setIsCreateModalOpen(false)} />
-                    </DialogContent>
-                  </Dialog>
+                  {canCreateProject && (
+                    <Dialog open={isCreateModalOpen} onOpenChange={setIsCreateModalOpen}>
+                      <DialogTrigger asChild>
+                        <Button className="rounded-xl bg-primary px-6 py-2.5 h-auto text-sm font-bold text-white shadow-lg shadow-primary/20 hover:bg-primary/90 transition-all">
+                          <Plus className="h-4 w-4 mr-2" />
+                          Start New Project
+                        </Button>
+                      </DialogTrigger>
+                      <DialogContent className="sm:max-w-[600px]">
+                        <DialogHeader>
+                          <DialogTitle>Create New Project</DialogTitle>
+                        </DialogHeader>
+                        <CreateProjectForm onSuccess={() => setIsCreateModalOpen(false)} />
+                      </DialogContent>
+                    </Dialog>
+                  )}
                </div>
             </div>
 
@@ -78,7 +90,7 @@ export default function ProjectsPage() {
             </div>
 
             <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-               {PROJECTS.map((project) => (
+               {visibleProjects.map((project) => (
                   <ProjectCard key={project.id} project={project} />
                ))}
             </div>

@@ -77,7 +77,7 @@ const MENU_ITEMS: MenuItem[] = [
     title: "Projects",
     icon: FolderKanban,
     href: "/workspace/projects",
-    roles: ["BUSINESS_OWNER", "PROJECT_MANAGER"],
+    roles: ["BUSINESS_OWNER", "HR", "PROJECT_MANAGER", "SUPERVISOR", "EMPLOYEE"],
   },
   {
     title: "Tasks / Todo",
