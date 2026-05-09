@@ -13,7 +13,7 @@ import {
   getFilteredRowModel,
   ColumnDef,
 } from "@tanstack/react-table";
-import { Search, MoreVertical, Edit2, Trash2, Plus, ChevronLeft, ChevronRight, Filter } from "lucide-react";
+import { Search, MoreVertical, Edit2, Trash2, Plus, ChevronLeft, ChevronRight, Filter, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { Employee } from "@/types";
@@ -33,6 +33,9 @@ export default function EmployeeTable() {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [globalFilter, setGlobalFilter] = useState("");
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
+  const [selectedEmployee, setSelectedEmployee] = useState<Employee | null>(null);
   const { user } = useAuthStore();
 
   const isHRorOwner = user?.role === "BUSINESS_OWNER" || user?.role === "HR";
@@ -81,11 +84,7 @@ export default function EmployeeTable() {
     },
     ...(isHRorOwner ? [{
       id: "actions",
-      cell: () => (
-        <button className="rounded-lg p-2 hover:bg-muted transition-colors">
-          <MoreVertical className="h-4 w-4 text-muted-foreground" />
-        </button>
-      ),
+      cell: ({ row }: any) => <ActionMenu row={row} onEdit={(emp: Employee) => { setSelectedEmployee(emp); setIsEditModalOpen(true); }} />
     }] : []),
   ];
 
@@ -117,7 +116,10 @@ export default function EmployeeTable() {
           />
         </div>
         <div className="flex items-center gap-2">
-          <button className="flex items-center gap-2 rounded-xl border border-border bg-card px-4 py-2 text-sm font-medium hover:bg-accent transition-all shadow-sm">
+          <button 
+            onClick={() => setIsFilterModalOpen(true)}
+            className="flex items-center gap-2 rounded-xl border border-border bg-card px-4 py-2 text-sm font-medium hover:bg-accent transition-all shadow-sm"
+          >
             <Filter className="h-4 w-4" />
             Filter
           </button>
@@ -206,6 +208,87 @@ export default function EmployeeTable() {
           </div>
         </div>
       </div>
+
+      <AnimatePresence>
+         {isFilterModalOpen && (
+            <div className="fixed inset-0 bg-background/80 backdrop-blur-sm z-50 flex items-center justify-center">
+               <motion.div initial={{opacity:0, scale:0.9}} animate={{opacity:1, scale:1}} exit={{opacity:0, scale:0.9}} className="bg-card border border-border p-6 rounded-3xl shadow-2xl w-full max-w-sm">
+                  <div className="flex justify-between items-center mb-6">
+                     <h3 className="font-bold text-lg">Filter Data</h3>
+                     <button onClick={() => setIsFilterModalOpen(false)}><X className="h-5 w-5 text-muted-foreground" /></button>
+                  </div>
+                  <div className="space-y-4">
+                     <select className="w-full rounded-xl border border-border bg-background p-3 text-sm font-medium">
+                        <option>All Departments</option>
+                        <option>Engineering</option>
+                        <option>Sales</option>
+                        <option>Marketing</option>
+                     </select>
+                     <select className="w-full rounded-xl border border-border bg-background p-3 text-sm font-medium">
+                        <option>Status: All</option>
+                        <option>Active</option>
+                        <option>On Leave</option>
+                        <option>Suspended</option>
+                     </select>
+                     <button onClick={() => setIsFilterModalOpen(false)} className="w-full bg-primary text-white font-bold py-3 rounded-xl mt-4">Apply Filters</button>
+                  </div>
+               </motion.div>
+            </div>
+         )}
+         
+         {isEditModalOpen && selectedEmployee && (
+            <div className="fixed inset-0 bg-background/80 backdrop-blur-sm z-50 flex items-center justify-center">
+               <motion.div initial={{opacity:0, scale:0.9}} animate={{opacity:1, scale:1}} exit={{opacity:0, scale:0.9}} className="bg-card border border-border p-6 rounded-3xl shadow-2xl w-full max-w-md">
+                  <div className="flex justify-between items-center mb-6">
+                     <h3 className="font-bold text-lg">Edit {selectedEmployee.firstName}</h3>
+                     <button onClick={() => setIsEditModalOpen(false)}><X className="h-5 w-5 text-muted-foreground" /></button>
+                  </div>
+                  <form onSubmit={(e) => { e.preventDefault(); setIsEditModalOpen(false); }} className="space-y-4">
+                     <div className="space-y-1">
+                        <label className="text-xs font-bold text-muted-foreground uppercase tracking-widest">Department</label>
+                        <input defaultValue={selectedEmployee.department} className="w-full rounded-xl border border-border bg-background p-3 text-sm" />
+                     </div>
+                     <div className="space-y-1">
+                        <label className="text-xs font-bold text-muted-foreground uppercase tracking-widest">Designation</label>
+                        <input defaultValue={selectedEmployee.designation} className="w-full rounded-xl border border-border bg-background p-3 text-sm" />
+                     </div>
+                     <div className="space-y-1">
+                        <label className="text-xs font-bold text-muted-foreground uppercase tracking-widest">Status Update</label>
+                        <select defaultValue={selectedEmployee.status} className="w-full rounded-xl border border-border bg-background p-3 text-sm">
+                           <option value="ACTIVE">ACTIVE</option>
+                           <option value="ON_LEAVE">ON LEAVE</option>
+                           <option value="SUSPENDED">SUSPENDED</option>
+                        </select>
+                     </div>
+                     <button type="submit" className="w-full bg-primary text-white font-bold py-3 rounded-xl mt-4">Save Changes</button>
+                  </form>
+               </motion.div>
+            </div>
+         )}
+      </AnimatePresence>
+    </div>
+  );
+}
+
+function ActionMenu({ row, onEdit }: { row: any, onEdit: (emp: Employee) => void }) {
+  const [menuOpen, setMenuOpen] = useState(false);
+  return (
+    <div className="relative">
+      <button onClick={() => setMenuOpen(!menuOpen)} className="rounded-lg p-2 hover:bg-muted transition-colors">
+        <MoreVertical className="h-4 w-4 text-muted-foreground" />
+      </button>
+      {menuOpen && (
+        <div className="absolute z-50 right-0 top-full mt-1 w-32 bg-card border border-border rounded-xl shadow-lg overflow-hidden font-medium text-xs">
+           <button 
+             onClick={() => { onEdit(row.original); setMenuOpen(false); }}
+             className="w-full text-left px-3 py-2 hover:bg-muted flex items-center gap-2"
+           ><Edit2 className="h-3 w-3" /> Edit</button>
+           <button 
+             onClick={() => { setMenuOpen(false); }}
+             className="w-full text-left px-3 py-2 hover:bg-muted text-amber-500 flex items-center gap-2"
+           ><Trash2 className="h-3 w-3" /> Suspend</button>
+        </div>
+      )}
     </div>
   );
 }
