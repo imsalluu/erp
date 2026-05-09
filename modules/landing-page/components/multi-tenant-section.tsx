@@ -37,7 +37,7 @@ export default function MultiTenantSection() {
             </div>
 
             <Button size="lg" asChild className="rounded-xl px-8 h-14 font-bold shadow-lg shadow-orange-500/20 bg-orange-500 hover:bg-orange-600 mt-4 group">
-              <Link href="/login">
+              <Link href="/architecture">
                 View Architecture
                 <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
               </Link>

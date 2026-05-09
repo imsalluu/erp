@@ -116,6 +116,12 @@ const MENU_ITEMS: MenuItem[] = [
     roles: ["BUSINESS_OWNER", "HR", "PROJECT_MANAGER"],
   },
   {
+    title: "Demo Leads",
+    icon: Users,
+    href: "/platform/demo-requests",
+    roles: ["SYSTEM_ADMIN"],
+  },
+  {
     title: "Platform Settings",
     icon: Settings,
     href: "/platform/settings",

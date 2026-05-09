@@ -5,8 +5,12 @@ import { motion } from "framer-motion";
 import { ArrowRight, Play, CheckCircle2, Layers } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { useState } from "react";
+import DemoModal from "@/modules/landing-page/components/demo-modal";
 
 export default function HeroSection() {
+  const [demoOpen, setDemoOpen] = useState(false);
+
   return (
     <section className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden bg-background">
       {/* Background Gradients */}
@@ -47,11 +51,14 @@ export default function HeroSection() {
                 <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
               </Link>
             </Button>
-            <Button size="lg" asChild variant="outline" className="h-14 px-8 rounded-2xl text-base font-bold w-full sm:w-auto hover:bg-muted group">
-              <Link href="/login">
-                <Play className="mr-2 h-5 w-5 fill-foreground/20 group-hover:fill-foreground/40 transition-colors" />
-                Book a Demo
-              </Link>
+            <Button 
+              size="lg" 
+              variant="outline" 
+              onClick={() => setDemoOpen(true)}
+              className="h-14 px-8 rounded-2xl text-base font-bold w-full sm:w-auto hover:bg-muted group"
+            >
+              <Play className="mr-2 h-5 w-5 fill-foreground/20 group-hover:fill-foreground/40 transition-colors" />
+              Book a Demo
             </Button>
           </div>
 
@@ -83,40 +90,40 @@ export default function HeroSection() {
             <div className="aspect-[16/9] w-full bg-background rounded-b-2xl flex relative overflow-hidden text-left">
                {/* Sidebar */}
                <div className="w-1/4 max-w-[240px] border-r border-border bg-muted/20 p-4 flex flex-col gap-6 hidden sm:flex">
-                 <div className="h-8 w-3/4 bg-primary/20 rounded-lg animate-pulse" />
+                 <div className="h-8 w-3/4 bg-blue-100 dark:bg-blue-900 rounded-lg animate-pulse" />
                  <div className="space-y-3">
-                   <div className="h-4 w-full bg-muted rounded-md" />
-                   <div className="h-4 w-5/6 bg-muted rounded-md" />
-                   <div className="h-4 w-4/6 bg-muted rounded-md" />
-                   <div className="h-4 w-5/6 bg-muted rounded-md" />
+                   <div className="h-4 w-full bg-slate-200 dark:bg-slate-800 rounded-md" />
+                   <div className="h-4 w-5/6 bg-slate-200 dark:bg-slate-800 rounded-md" />
+                   <div className="h-4 w-4/6 bg-slate-200 dark:bg-slate-800 rounded-md" />
+                   <div className="h-4 w-5/6 bg-slate-200 dark:bg-slate-800 rounded-md" />
                  </div>
-                 <div className="mt-auto h-10 w-full bg-muted rounded-lg" />
+                 <div className="mt-auto h-10 w-full bg-slate-200 dark:bg-slate-800 rounded-lg" />
                </div>
                
                {/* Main Content */}
                <div className="flex-1 p-4 sm:p-6 flex flex-col gap-4 sm:gap-6 bg-muted/5">
                  {/* Topbar */}
                  <div className="flex justify-between items-center pb-4 border-b border-border/50">
-                    <div className="h-6 w-1/3 bg-muted rounded-md" />
+                    <div className="h-6 w-1/3 bg-slate-200 dark:bg-slate-800 rounded-md" />
                     <div className="flex gap-3">
-                      <div className="h-8 w-8 bg-muted rounded-full" />
-                      <div className="h-8 w-8 bg-primary/20 rounded-full animate-pulse" />
+                      <div className="h-8 w-8 bg-slate-200 dark:bg-slate-800 rounded-full" />
+                      <div className="h-8 w-8 bg-blue-200 dark:bg-blue-800 rounded-full animate-pulse" />
                     </div>
                  </div>
 
                  {/* KPI Cards */}
                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
                     <div className="h-20 sm:h-24 bg-card border border-border rounded-xl p-4 flex flex-col justify-between shadow-sm">
-                       <div className="h-3 sm:h-4 w-1/2 bg-muted rounded" />
-                       <div className="h-6 sm:h-8 w-3/4 bg-primary/10 rounded" />
+                       <div className="h-3 sm:h-4 w-1/2 bg-slate-200 dark:bg-slate-800 rounded" />
+                       <div className="h-6 sm:h-8 w-3/4 bg-blue-100 dark:bg-blue-900 rounded" />
                     </div>
                     <div className="h-20 sm:h-24 bg-card border border-border rounded-xl p-4 flex flex-col justify-between shadow-sm">
-                       <div className="h-3 sm:h-4 w-1/2 bg-muted rounded" />
-                       <div className="h-6 sm:h-8 w-2/3 bg-emerald-500/10 rounded" />
+                       <div className="h-3 sm:h-4 w-1/2 bg-slate-200 dark:bg-slate-800 rounded" />
+                       <div className="h-6 sm:h-8 w-2/3 bg-emerald-100 dark:bg-emerald-900 rounded" />
                     </div>
                     <div className="h-20 sm:h-24 bg-card border border-border rounded-xl p-4 flex flex-col justify-between shadow-sm hidden sm:flex">
-                       <div className="h-3 sm:h-4 w-1/2 bg-muted rounded" />
-                       <div className="h-6 sm:h-8 w-3/4 bg-blue-500/10 rounded" />
+                       <div className="h-3 sm:h-4 w-1/2 bg-slate-200 dark:bg-slate-800 rounded" />
+                       <div className="h-6 sm:h-8 w-3/4 bg-orange-100 dark:bg-orange-900 rounded" />
                     </div>
                  </div>
 
@@ -126,7 +133,7 @@ export default function HeroSection() {
                        {[30, 50, 40, 70, 60, 90, 80].map((h, i) => (
                          <div 
                            key={i} 
-                           className="flex-1 bg-primary/20 rounded-t-sm animate-pulse" 
+                           className="flex-1 bg-blue-500 rounded-t-sm animate-pulse" 
                            style={{ height: `${h}%`, animationDelay: `${i * 100}ms` }} 
                          />
                        ))}
@@ -140,6 +147,8 @@ export default function HeroSection() {
                  </div>
                </div>
             </div>
+            
+            <DemoModal isOpen={demoOpen} onClose={() => setDemoOpen(false)} />
           </div>
         </motion.div>
 

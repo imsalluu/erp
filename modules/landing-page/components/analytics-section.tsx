@@ -47,8 +47,8 @@ export default function AnalyticsSection() {
                         viewport={{ once: true }}
                         transition={{ delay: i * 0.05, duration: 0.5, type: "spring" }}
                         className={cn(
-                          "w-full rounded-t-sm", 
-                          i === 7 ? "bg-indigo-500" : "bg-indigo-500/20"
+                          "w-full rounded-t-sm bg-indigo-500", 
+                          i === 7 ? "opacity-100" : "opacity-30 hover:opacity-80 transition-opacity"
                         )} 
                       />
                    </div>
