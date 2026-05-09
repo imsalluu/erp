@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useAuthStore } from "@/store/auth-store";
 import { 
   flexRender, 
@@ -17,9 +17,17 @@ import { MOCK_LEAVE_REQUESTS } from "@/mock-data";
 import { Button } from "@/components/ui/button";
 
 export default function LeaveTable() {
-  const [data, setData] = useState<LeaveRequest[]>(MOCK_LEAVE_REQUESTS);
-  const [sorting, setSorting] = useState<SortingState>([]);
   const { user } = useAuthStore();
+  const [data, setData] = useState<LeaveRequest[]>([]);
+  const [sorting, setSorting] = useState<SortingState>([]);
+  
+  useEffect(() => {
+    if (user?.role === "PROJECT_MANAGER" || user?.role === "EMPLOYEE") {
+      setData(MOCK_LEAVE_REQUESTS.filter(req => req.employeeName === user.name));
+    } else {
+      setData(MOCK_LEAVE_REQUESTS);
+    }
+  }, [user]);
 
   const isApprover = user?.role === "BUSINESS_OWNER" || user?.role === "HR" || user?.role === "SUPERVISOR";
 

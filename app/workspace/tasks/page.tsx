@@ -1,10 +1,11 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { useAuthStore } from "@/store/auth-store";
 import MainLayout from "@/components/layout/main-layout";
 import { SectionHeader } from "@/modules/dashboard/components/dashboard-ui";
 import TaskKanban from "@/modules/tasks/components/task-kanban";
+import TaskList from "@/modules/tasks/components/task-list";
 import { Button } from "@/components/ui/button";
 import { Plus, LayoutGrid, List as ListIcon, Filter } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
@@ -20,6 +21,7 @@ const mockTasks = [
 ];
 
 export default function TasksPage() {
+  const dateInputRef = useRef<HTMLInputElement>(null);
   const { user } = useAuthStore();
   const canCreateTask = user?.role === "BUSINESS_OWNER" || user?.role === "PROJECT_MANAGER" || user?.role === "SUPERVISOR";
   
@@ -27,6 +29,7 @@ export default function TasksPage() {
   const [projectFilter, setProjectFilter] = useState("all");
   const [assigneeFilter, setAssigneeFilter] = useState("all");
   const [dateFilter, setDateFilter] = useState("");
+  const [view, setView] = useState<"grid" | "list">("grid");
 
   const [isCreateOpen, setIsCreateOpen] = useState(false);
   const [newTask, setNewTask] = useState({ title: "", priority: "MEDIUM", dueDate: "", assignee: "", projectId: "P1" });
@@ -55,17 +58,22 @@ export default function TasksPage() {
           <div className="flex items-center gap-3">
             <div className="relative flex items-center gap-2">
               <button 
+                onClick={() => dateInputRef.current?.showPicker()}
                 className={`flex w-[155px] overflow-hidden whitespace-nowrap items-center gap-2 rounded-xl border px-4 py-2.5 text-sm font-bold shadow-sm transition-all focus-within:ring-2 focus-within:ring-primary/20 ${dateFilter ? "bg-primary text-white border-primary pr-8" : "border-border bg-card hover:bg-muted text-muted-foreground"}`}
               >
                  <Filter className="h-4 w-4 shrink-0" />
                  {dateFilter ? dateFilter : "Date Ordered"}
               </button>
               <input 
+                ref={dateInputRef}
                 type="date"
                 value={dateFilter}
-                onChange={(e) => setDateFilter(e.target.value)}
+                onChange={(e) => {
+                  setDateFilter(e.target.value);
+                  if (e.target.value) setView("list");
+                }}
                 title="Filter by date"
-                className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                className="sr-only"
               />
               {dateFilter && (
                 <button 
@@ -166,16 +174,26 @@ export default function TasksPage() {
             </div>
           </div>
           <div className="flex items-center gap-2 p-1 bg-card rounded-xl border border-border shadow-sm">
-            <button className="p-2 rounded-lg bg-primary text-white shadow-sm">
+            <button 
+              onClick={() => setView("grid")}
+              className={`p-2 rounded-lg shadow-sm transition-all ${view === "grid" ? "bg-primary text-white" : "hover:bg-muted text-muted-foreground"}`}
+            >
               <LayoutGrid className="h-4 w-4" />
             </button>
-            <button className="p-2 rounded-lg hover:bg-muted text-muted-foreground">
+            <button 
+              onClick={() => setView("list")}
+              className={`p-2 rounded-lg shadow-sm transition-all ${view === "list" ? "bg-primary text-white" : "hover:bg-muted text-muted-foreground"}`}
+            >
               <ListIcon className="h-4 w-4" />
             </button>
           </div>
         </div>
 
-        <TaskKanban tasks={filteredTasks} setTasks={setTasks} />
+        {view === "grid" ? (
+          <TaskKanban tasks={filteredTasks} setTasks={setTasks} />
+        ) : (
+          <TaskList tasks={filteredTasks} setTasks={setTasks} />
+        )}
       </div>
     </MainLayout>
   );

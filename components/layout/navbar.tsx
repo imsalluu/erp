@@ -43,7 +43,7 @@ export default function Navbar() {
             <motion.div 
               initial={{ opacity: 0, y: 10, scale: 0.95 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
-              className="absolute right-0 top-full mt-2 w-80 bg-card border border-border rounded-2xl shadow-xl overflow-hidden z-50 p-2"
+              className="absolute right-0 top-full mt-2 w-80 bg-background border border-border rounded-2xl shadow-xl overflow-hidden z-50 p-2"
             >
                <div className="p-3 border-b border-border/50 flex justify-between items-center">
                   <span className="font-bold">Notifications</span>
@@ -100,7 +100,7 @@ export default function Navbar() {
              <motion.div 
                 initial={{ opacity: 0, y: 10, scale: 0.95 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
-                className="absolute right-0 top-full mt-2 w-56 bg-card border border-border rounded-xl shadow-xl overflow-hidden z-50 p-1"
+                className="absolute right-0 top-full mt-2 w-56 bg-background border border-border rounded-xl shadow-xl overflow-hidden z-50 p-1"
              >
                 <div className="p-3 border-b border-border/50 lg:hidden">
                    <p className="text-sm font-semibold truncate">{user.name}</p>
