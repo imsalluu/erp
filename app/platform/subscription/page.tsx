@@ -13,7 +13,7 @@ export default function SubscriptionPage() {
    const [billingCycle, setBillingCycle] = useState<"monthly" | "yearly">("monthly");
 
    return (
-      <MainLayout roleRequired="BUSINESS_OWNER">
+      <MainLayout allowedRoles={["SYSTEM_ADMIN"]}>
          <div className="space-y-10 pb-20">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
                <SectionHeader
@@ -37,7 +37,7 @@ export default function SubscriptionPage() {
                </div>
             </div>
 
-            <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+            <div className="grid gap-20 md:grid-cols-2 lg:grid-cols-3">
                {PRICING_PLANS.map((plan) => (
                   <div key={plan.name} className={cn(
                      "relative flex flex-col rounded-3xl border p-8 bg-card transition-all hover:shadow-xl hover:-translate-y-1",

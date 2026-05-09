@@ -33,7 +33,7 @@ const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
 
 export default function ReportsPage() {
   return (
-    <MainLayout>
+    <MainLayout allowedRoles={["BUSINESS_OWNER", "HR", "PROJECT_MANAGER"]}>
       <div className="space-y-8 pb-20">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
           <SectionHeader 

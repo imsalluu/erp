@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { useAuthStore } from "@/store/auth-store";
 import MainLayout from "@/components/layout/main-layout";
 import { SectionHeader } from "@/modules/dashboard/components/dashboard-ui";
 import TaskKanban from "@/modules/tasks/components/task-kanban";
@@ -8,8 +9,10 @@ import { Button } from "@/components/ui/button";
 import { Plus, LayoutGrid, List as ListIcon, Filter } from "lucide-react";
 
 export default function TasksPage() {
+  const { user } = useAuthStore();
+  const canCreateTask = user?.role === "BUSINESS_OWNER" || user?.role === "PROJECT_MANAGER" || user?.role === "SUPERVISOR";
   return (
-    <MainLayout>
+    <MainLayout allowedRoles={["BUSINESS_OWNER", "PROJECT_MANAGER", "SUPERVISOR", "EMPLOYEE"]}>
       <div className="space-y-8 pb-20">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
           <SectionHeader 
@@ -17,14 +20,16 @@ export default function TasksPage() {
             description="Manage your personal and team tasks across projects."
           />
           <div className="flex items-center gap-3">
-            <button className="flex items-center gap-2 rounded-xl border border-border bg-card px-4 py-2.5 text-sm font-bold shadow-sm hover:bg-muted transition-all">
+            <button className="flex items-center gap-2 rounded-xl border border-border bg-card px-4 py-2.5 text-sm font-bold shadow-sm hover:bg-muted transition-all text-muted-foreground">
                <Filter className="h-4 w-4" />
                Filter
             </button>
-            <Button className="rounded-xl font-bold px-6 py-2.5 h-auto shadow-lg shadow-primary/20">
-              <Plus className="h-4 w-4 mr-2" />
-              New Task
-            </Button>
+            {canCreateTask && (
+              <Button className="rounded-xl font-bold px-6 py-2.5 h-auto shadow-lg shadow-primary/20">
+                <Plus className="h-4 w-4 mr-2" />
+                New Task
+              </Button>
+            )}
           </div>
         </div>
 

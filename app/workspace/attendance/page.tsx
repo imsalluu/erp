@@ -7,7 +7,7 @@ import AttendanceLog from "@/modules/attendance/components/attendance-log";
 
 export default function AttendancePage() {
   return (
-    <MainLayout>
+    <MainLayout allowedRoles={["BUSINESS_OWNER", "HR", "PROJECT_MANAGER", "SUPERVISOR", "EMPLOYEE"]}>
       <div className="space-y-8">
         <SectionHeader 
           title="Attendance & Timing" 

@@ -28,18 +28,18 @@ export default function OTPVerificationPage() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-[#f8fafc] px-4 dark:bg-[#020617]">
+    <div className="flex min-h-screen items-center justify-center bg-background px-4">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="w-full max-w-md rounded-2xl bg-white p-8 shadow-2xl dark:bg-[#0f172a] dark:ring-1 dark:ring-slate-800"
+        className="w-full max-w-md rounded-2xl bg-card border border-border p-8 shadow-2xl"
       >
         <div className="mb-8 text-center">
           <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 text-primary">
             <ShieldCheck className="h-6 w-6" />
           </div>
-          <h1 className="text-2xl font-bold tracking-tight">Verify OTP</h1>
-          <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">
+          <h1 className="text-2xl font-bold tracking-tight text-foreground">Verify OTP</h1>
+          <p className="mt-2 text-sm text-muted-foreground">
             We&apos;ve sent a code to your email. Enter it below.
           </p>
         </div>
@@ -54,7 +54,7 @@ export default function OTPVerificationPage() {
                 value={data}
                 onChange={(e) => handleChange(e.target, index)}
                 onFocus={(e) => e.target.select()}
-                className="h-12 w-12 rounded-xl border border-border bg-muted/50 text-center text-xl font-bold focus:border-primary focus:ring-4 focus:ring-primary/10 outline-none transition-all"
+                className="h-12 w-12 rounded-xl border border-border bg-background text-foreground text-center text-xl font-bold focus:border-primary focus:ring-4 focus:ring-primary/10 outline-none transition-all"
               />
             ))}
           </div>

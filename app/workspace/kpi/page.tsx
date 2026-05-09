@@ -7,7 +7,7 @@ import React from "react";
 
 export default function KPIPage() {
   return (
-    <MainLayout>
+    <MainLayout allowedRoles={["BUSINESS_OWNER", "HR", "PROJECT_MANAGER", "SUPERVISOR", "EMPLOYEE"]}>
       <div className="space-y-8">
         <SectionHeader 
           title="Performance & KPIs" 

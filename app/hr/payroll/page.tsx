@@ -11,7 +11,7 @@ export default function PayrollPage() {
   const totalPayroll = REALISTIC_EMPLOYEES.reduce((acc, emp) => acc + emp.salary, 0);
 
   return (
-    <MainLayout>
+    <MainLayout allowedRoles={["BUSINESS_OWNER", "HR"]}>
       <div className="space-y-8">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
           <SectionHeader 

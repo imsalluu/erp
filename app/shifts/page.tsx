@@ -7,7 +7,7 @@ import { Calendar, Users, Settings } from "lucide-react";
 
 export default function ShiftsPage() {
   return (
-    <MainLayout>
+    <MainLayout allowedRoles={["BUSINESS_OWNER", "HR", "SUPERVISOR"]}>
       <div className="space-y-10 pb-20">
         <SectionHeader 
           title="Shift & Rotation Management" 

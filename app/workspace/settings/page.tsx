@@ -16,8 +16,8 @@ import { Checkbox } from "@/components/ui/checkbox";
 
 export default function SettingsPage() {
   return (
-    <MainLayout>
-      <div className="space-y-8 pb-20 max-w-5xl">
+    <MainLayout allowedRoles={["BUSINESS_OWNER"]}>
+      <div className="space-y-8 pb-20">
         <SectionHeader 
           title="System Settings" 
           description="Configure your organization preferences, notification rules, and security policies."

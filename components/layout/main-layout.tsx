@@ -4,17 +4,18 @@ import React from "react";
 import Sidebar from "./sidebar";
 import Navbar from "./navbar";
 import ProtectedRoute from "../auth/protected-route";
+import { Role } from "@/types";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function MainLayout({ 
   children,
-  roleRequired 
+  allowedRoles 
 }: { 
   children: React.ReactNode;
-  roleRequired?: string;
+  allowedRoles?: Role[];
 }) {
   return (
-    <ProtectedRoute>
+    <ProtectedRoute allowedRoles={allowedRoles}>
       <div className="flex min-h-screen bg-background">
         <Sidebar />
         <div className="flex flex-1 flex-col">

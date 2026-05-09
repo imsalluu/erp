@@ -20,7 +20,7 @@ export default function LeavesPage() {
   const [isApplyModalOpen, setIsApplyModalOpen] = useState(false);
 
   return (
-    <MainLayout>
+    <MainLayout allowedRoles={["BUSINESS_OWNER", "HR", "PROJECT_MANAGER", "SUPERVISOR", "EMPLOYEE"]}>
       <div className="space-y-8">
         <div className="flex items-center justify-between">
           <SectionHeader 

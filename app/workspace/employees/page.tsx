@@ -6,7 +6,7 @@ import EmployeeTable from "@/modules/employees/components/employee-table";
 
 export default function EmployeesPage() {
   return (
-    <MainLayout>
+    <MainLayout allowedRoles={["BUSINESS_OWNER", "HR"]}>
       <div className="space-y-8">
         <SectionHeader 
           title="Employee Management" 

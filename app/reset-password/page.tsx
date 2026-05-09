@@ -21,11 +21,11 @@ export default function ResetPasswordPage() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-[#f8fafc] px-4 dark:bg-[#020617]">
+    <div className="flex min-h-screen items-center justify-center bg-background px-4">
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
-        className="w-full max-w-md rounded-2xl bg-white p-8 shadow-2xl dark:bg-[#0f172a] dark:ring-1 dark:ring-slate-800"
+        className="w-full max-w-md rounded-2xl bg-card border border-border p-8 shadow-2xl"
       >
         {isSuccess ? (
           <div className="py-8 text-center text-emerald-500">
@@ -36,8 +36,8 @@ export default function ResetPasswordPage() {
             >
               <CheckCircle2 className="h-10 w-10" />
             </motion.div>
-            <h2 className="text-2xl font-bold">Success!</h2>
-            <p className="mt-2 text-sm text-slate-500">Your password has been reset. Redirecting to login...</p>
+            <h2 className="text-2xl font-bold text-foreground">Success!</h2>
+            <p className="mt-2 text-sm text-muted-foreground">Your password has been reset. Redirecting to login...</p>
           </div>
         ) : (
           <>
@@ -45,15 +45,15 @@ export default function ResetPasswordPage() {
               <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 text-primary">
                 <Lock className="h-6 w-6" />
               </div>
-              <h1 className="text-2xl font-bold tracking-tight">Set New Password</h1>
-              <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">
+              <h1 className="text-2xl font-bold tracking-tight text-foreground">Set New Password</h1>
+              <p className="mt-2 text-sm text-muted-foreground">
                 Choose a strong password for your account.
               </p>
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="space-y-2">
-                <label className="text-sm font-medium">New Password</label>
+                <label className="text-sm font-medium text-foreground">New Password</label>
                 <div className="relative">
                   <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                   <input
@@ -61,14 +61,14 @@ export default function ResetPasswordPage() {
                     placeholder="••••••••"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="w-full rounded-xl border border-border bg-muted/50 py-3 pl-10 pr-4 text-sm outline-none focus:border-primary transition-all"
+                    className="w-full rounded-xl border border-border bg-background text-foreground py-3 pl-10 pr-4 text-sm outline-none focus:border-primary transition-all"
                     required
                   />
                 </div>
               </div>
               
               <div className="space-y-2">
-                <label className="text-sm font-medium">Confirm Password</label>
+                <label className="text-sm font-medium text-foreground">Confirm Password</label>
                 <div className="relative">
                   <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                   <input
@@ -76,7 +76,7 @@ export default function ResetPasswordPage() {
                     placeholder="••••••••"
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
-                    className="w-full rounded-xl border border-border bg-muted/50 py-3 pl-10 pr-4 text-sm outline-none focus:border-primary transition-all"
+                    className="w-full rounded-xl border border-border bg-background text-foreground py-3 pl-10 pr-4 text-sm outline-none focus:border-primary transition-all"
                     required
                   />
                 </div>

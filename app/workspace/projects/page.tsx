@@ -23,7 +23,7 @@ export default function ProjectsPage() {
    const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
 
    return (
-      <MainLayout>
+      <MainLayout allowedRoles={["BUSINESS_OWNER", "PROJECT_MANAGER"]}>
          <div className="space-y-8 pb-20">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
                <SectionHeader

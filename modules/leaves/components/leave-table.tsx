@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { useAuthStore } from "@/store/auth-store";
 import { 
   flexRender, 
   getCoreRowModel, 
@@ -18,6 +19,9 @@ import { Button } from "@/components/ui/button";
 export default function LeaveTable() {
   const [data] = useState<LeaveRequest[]>(MOCK_LEAVE_REQUESTS);
   const [sorting, setSorting] = useState<SortingState>([]);
+  const { user } = useAuthStore();
+
+  const isApprover = user?.role === "BUSINESS_OWNER" || user?.role === "HR" || user?.role === "SUPERVISOR";
 
   const columns = [
     {
@@ -63,14 +67,14 @@ export default function LeaveTable() {
         );
       },
     },
-    {
+    ...(isApprover ? [{
       id: "actions",
       cell: () => (
-        <Button variant="ghost" size="icon" className="h-8 w-8">
+        <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground hover:text-primary">
           <MoreVertical className="h-4 w-4" />
         </Button>
       ),
-    },
+    }] : []),
   ];
 
   const table = useReactTable({

@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import { useState } from "react";
+import { useAuthStore } from "@/store/auth-store";
 import {
   flexRender,
   getCoreRowModel,
@@ -32,6 +33,9 @@ export default function EmployeeTable() {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [globalFilter, setGlobalFilter] = useState("");
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const { user } = useAuthStore();
+
+  const isHRorOwner = user?.role === "BUSINESS_OWNER" || user?.role === "HR";
 
   const columns: ColumnDef<Employee>[] = [
     {
@@ -75,14 +79,14 @@ export default function EmployeeTable() {
       accessorKey: "joinDate",
       header: "Join Date",
     },
-    {
+    ...(isHRorOwner ? [{
       id: "actions",
       cell: () => (
         <button className="rounded-lg p-2 hover:bg-muted transition-colors">
           <MoreVertical className="h-4 w-4 text-muted-foreground" />
         </button>
       ),
-    },
+    }] : []),
   ];
 
   const table = useReactTable({
@@ -117,20 +121,22 @@ export default function EmployeeTable() {
             <Filter className="h-4 w-4" />
             Filter
           </button>
-          <Dialog open={isAddModalOpen} onOpenChange={setIsAddModalOpen}>
-            <DialogTrigger asChild>
-              <Button className="rounded-xl font-semibold">
-                <Plus className="h-4 w-4 mr-2" />
-                Add Employee
-              </Button>
-            </DialogTrigger>
-            <DialogContent className="sm:max-w-[500px]">
-              <DialogHeader>
-                <DialogTitle>Add New Employee</DialogTitle>
-              </DialogHeader>
-              <AddEmployeeForm onSuccess={() => setIsAddModalOpen(false)} />
-            </DialogContent>
-          </Dialog>
+          {isHRorOwner && (
+            <Dialog open={isAddModalOpen} onOpenChange={setIsAddModalOpen}>
+              <DialogTrigger asChild>
+                <Button className="rounded-xl font-semibold">
+                  <Plus className="h-4 w-4 mr-2" />
+                  Add Employee
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="sm:max-w-[500px]">
+                <DialogHeader>
+                  <DialogTitle>Add New Employee</DialogTitle>
+                </DialogHeader>
+                <AddEmployeeForm onSuccess={() => setIsAddModalOpen(false)} />
+              </DialogContent>
+            </Dialog>
+          )}
         </div>
       </div>
 

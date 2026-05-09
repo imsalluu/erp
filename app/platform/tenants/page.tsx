@@ -24,7 +24,7 @@ import { useState } from "react";
 export default function TenantManagementPage() {
    const [isProvisionModalOpen, setIsProvisionModalOpen] = useState(false);
    return (
-      <MainLayout roleRequired="SYSTEM_ADMIN">
+      <MainLayout allowedRoles={["SYSTEM_ADMIN"]}>
          <div className="space-y-10 pb-20">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
                <SectionHeader
