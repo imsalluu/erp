@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "react-router-dom"; // Note: User asked for Next.js 15 App router, usually use next/navigation
 import { useRouter as useNextRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { ShieldCheck, Loader2 } from "lucide-react";

@@ -7,7 +7,7 @@ import {
   User, Mail, Phone, 
   MapPin, Calendar, Briefcase,
   Edit2, Camera, Shield,
-  Github, Linkedin, Twitter
+  Globe, X
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -71,9 +71,9 @@ export default function ProfilePage() {
                 <CardTitle className="text-lg font-bold">Connect</CardTitle>
               </CardHeader>
               <CardContent className="flex gap-3">
-                <SocialButton icon={<Github className="h-4 w-4" />} />
-                <SocialButton icon={<Linkedin className="h-4 w-4" />} />
-                <SocialButton icon={<Twitter className="h-4 w-4" />} />
+                <SocialButton icon={<Globe className="h-4 w-4" />} />
+                <SocialButton icon={<Briefcase className="h-4 w-4" />} />
+                <SocialButton icon={<X className="h-4 w-4" />} />
               </CardContent>
             </Card>
           </div>

@@ -72,12 +72,12 @@ export default function KPIDashboardPage() {
               <div className="rounded-3xl border border-border bg-card p-8 shadow-sm">
                  <h3 className="font-bold text-lg mb-6">Upcoming Reviews</h3>
                  <div className="space-y-6">
-                    {[1, 2, 3].map(i => (
+                    {[0, 1, 2].map(i => (
                       <div key={i} className="relative pl-6 border-l-2 border-primary/20">
                          <div className="absolute left-[-5px] top-0 h-2 w-2 rounded-full bg-primary" />
-                         <p className="text-xs font-bold leading-none">May {i * 5 + 10}, 2026</p>
+                         <p className="text-xs font-bold leading-none">May {(i + 1) * 5 + 10}, 2026</p>
                          <p className="text-sm font-bold mt-2">Quarterly Review</p>
-                         <p className="text-[10px] text-muted-foreground mt-1">Employee: {REALISTIC_EMPLOYEES[i + 5].firstName}</p>
+                         <p className="text-[10px] text-muted-foreground mt-1">Employee: {REALISTIC_EMPLOYEES[i % REALISTIC_EMPLOYEES.length]?.firstName}</p>
                       </div>
                     ))}
                  </div>

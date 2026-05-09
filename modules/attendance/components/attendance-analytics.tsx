@@ -49,9 +49,10 @@ export default function AttendanceAnalytics() {
                 outerRadius={100}
                 paddingAngle={8}
                 dataKey="value"
+                cornerRadius={4}
               >
                 {pieData.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} cornerRadius={4} />
+                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                 ))}
               </Pie>
               <Tooltip />
