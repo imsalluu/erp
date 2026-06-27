@@ -52,7 +52,7 @@ export default function Navbar() {
                <div className="max-h-[300px] overflow-y-auto w-full">
                   <div className="p-3 hover:bg-muted/50 rounded-lg cursor-pointer border-b border-border/50">
                      <p className="text-sm font-semibold">New project assigned</p>
-                     <p className="text-xs text-muted-foreground mt-1">You were added to "Q4 Marketing Redesign"</p>
+                     <p className="text-xs text-muted-foreground mt-1">You were added to &quot;Q4 Marketing Redesign&quot;</p>
                      <p className="text-[10px] text-muted-foreground/60 mt-2 font-bold uppercase tracking-widest">2 hours ago</p>
                   </div>
                   <div className="p-3 hover:bg-muted/50 rounded-lg cursor-pointer border-b border-border/50">

@@ -34,6 +34,9 @@ export const useAuthStore = create<AuthState>()(
       },
       logout: () => {
         set({ user: null, isAuthenticated: false });
+        if (typeof window !== "undefined") {
+          localStorage.removeItem("auth-storage");
+        }
       },
       hasRole: (roles: Role[]) => {
         const { user } = get();

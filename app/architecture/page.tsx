@@ -79,7 +79,7 @@ export default function ArchitecturePage() {
                  <Lock className="h-8 w-8 text-emerald-500" />
                  <h3 className="text-2xl font-bold">Role-Based Security</h3>
                  <p className="text-muted-foreground leading-relaxed">
-                   Access tokens are signed using strict JWTs that contain claim boundaries. A user with "HR" rights in Tenant A cannot even initiate a request to modify an employee in Tenant B. The Core API rigorously validates tenant IDs at the edge.
+                   Access tokens are signed using strict JWTs that contain claim boundaries. A user with &quot;HR&quot; rights in Tenant A cannot even initiate a request to modify an employee in Tenant B. The Core API rigorously validates tenant IDs at the edge.
                  </p>
               </div>
            </div>

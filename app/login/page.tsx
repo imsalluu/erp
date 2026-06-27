@@ -4,8 +4,17 @@ import { useState } from "react";
 import { useAuthStore } from "@/store/auth-store";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
-import { LogIn, Mail, Lock, Loader2 } from "lucide-react";
+import { LogIn, Mail, Lock, Loader2, Copy } from "lucide-react";
 import React from "react";
+
+const DEMO_CREDENTIALS = [
+  { role: "System Admin", email: "admin@erp.com", pass: "123456" },
+  { role: "Business Owner", email: "owner@erp.com", pass: "123456" },
+  { role: "HR", email: "hr@erp.com", pass: "123456" },
+  { role: "Project Manager", email: "pm@erp.com", pass: "123456" },
+  { role: "Supervisor", email: "supervisor@erp.com", pass: "123456" },
+  { role: "Employee", email: "employee@erp.com", pass: "123456" },
+];
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -26,7 +35,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background px-4">
+    <div className="flex flex-col lg:flex-row min-h-screen items-center justify-center bg-background px-4 gap-8 py-12 lg:py-0">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -119,6 +128,41 @@ export default function LoginPage() {
           <p className="text-center text-xs text-muted-foreground">
             Don&apos;t have an account? <span className="text-primary cursor-pointer hover:underline">Contact your administrator</span>
           </p>
+        </div>
+      </motion.div>
+
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.2 }}
+        className="w-full max-w-md rounded-2xl bg-card border border-border p-8 shadow-2xl"
+      >
+        <div className="mb-6">
+          <h2 className="text-xl font-bold tracking-tight text-foreground">Demo Credentials</h2>
+          <p className="mt-1 text-sm text-muted-foreground">Click any role to autofill login details</p>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {DEMO_CREDENTIALS.map((cred) => (
+            <div
+              key={cred.role}
+              onClick={() => {
+                setEmail(cred.email);
+                setPassword(cred.pass);
+              }}
+              className="group p-4 rounded-xl border border-border bg-background hover:border-primary/50 hover:bg-primary/5 cursor-pointer transition-all"
+            >
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-sm font-semibold text-foreground group-hover:text-primary transition-colors">
+                  {cred.role}
+                </span>
+                <Copy className="h-4 w-4 text-muted-foreground group-hover:text-primary transition-colors opacity-0 group-hover:opacity-100" />
+              </div>
+              <div className="text-xs text-muted-foreground space-y-1">
+                <div>Email: {cred.email}</div>
+                <div>Pass: {cred.pass}</div>
+              </div>
+            </div>
+          ))}
         </div>
       </motion.div>
     </div>

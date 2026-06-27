@@ -85,9 +85,9 @@ export default function RolesSection() {
                   
                   <div className="pt-8 border-t border-border mt-4 grid grid-cols-2 md:grid-cols-4 gap-4">
                     {/* Placeholder metrics or capabilities */}
-                    {[1, 2, 3, 4].map((i) => (
+                    {[65, 45, 80, 55].map((w, i) => (
                       <div key={i} className="h-2 bg-muted rounded-full overflow-hidden">
-                        <div className={cn("h-full w-[70%]", activeData.color.split(' ')[0].replace('text-', 'bg-'))} style={{ width: `${Math.random() * 50 + 30}%` }} />
+                        <div className={cn("h-full w-[70%]", activeData.color.split(' ')[0].replace('text-', 'bg-'))} style={{ width: `${w}%` }} />
                       </div>
                     ))}
                   </div>

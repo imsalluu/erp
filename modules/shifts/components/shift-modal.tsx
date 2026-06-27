@@ -59,12 +59,14 @@ export function ShiftModal({ isOpen, onClose, onSave, shift }: ShiftModalProps) 
 
   useEffect(() => {
     if (shift) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setFormData({
         ...shift,
         start: to24Hour(shift.start),
         end: to24Hour(shift.end),
       });
     } else {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setFormData({
         name: "",
         start: "",

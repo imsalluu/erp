@@ -20,6 +20,7 @@ export function AssignShiftModal({ isOpen, onClose, shift, onSave }: AssignShift
 
   useEffect(() => {
     if (shift && isOpen) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setSelectedEmps(new Set(shift.assignedEmployees || []));
     }
   }, [shift, isOpen]);

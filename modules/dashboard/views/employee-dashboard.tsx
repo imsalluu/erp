@@ -87,7 +87,7 @@ export default function EmployeeDashboard() {
                AI Insights
             </h3>
             <p className="text-sm font-medium leading-relaxed dark:text-indigo-100 text-indigo-950/80 mb-4 pr-4">
-               You've been highly productive this week, completing 20% more tasks than average! However, your active screen time is very high. Consider taking a short break or scheduling a casual leave day soon to prevent burnout.
+               You&apos;ve been highly productive this week, completing 20% more tasks than average! However, your active screen time is very high. Consider taking a short break or scheduling a casual leave day soon to prevent burnout.
             </p>
             <button className="w-full mt-2 py-2.5 rounded-xl bg-indigo-600/10 text-indigo-600 dark:text-indigo-400 text-xs font-bold hover:bg-indigo-600/20 transition-all shadow-sm">
                Review Leave Balance
